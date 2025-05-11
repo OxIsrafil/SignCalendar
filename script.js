@@ -47,7 +47,7 @@ if (form) {
     const msg = document.getElementById("formMsg");
 
     try {
-      const res = await fetch(BASE_URL + "/pending", {
+      const res = await fetch(BASE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
