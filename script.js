@@ -20,7 +20,7 @@ function formatUTC(date, time) {
   return `${y}${m}${d}T${h}${min}00Z`;
 }
 
-// Toggle nav on mobile
+// Mobile nav toggle
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 if (toggle) {
@@ -29,7 +29,7 @@ if (toggle) {
   });
 }
 
-// Loader fadeout
+// Loader
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (loader) {
@@ -47,7 +47,7 @@ if (form) {
     const msg = document.getElementById("formMsg");
 
     try {
-      const res = await fetch(BASE_URL, {
+      const res = await fetch(BASE_URL + "/pending", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -57,11 +57,11 @@ if (form) {
         msg.textContent = "Event clash detected!";
         msg.style.color = "orange";
       } else if (res.ok) {
-        msg.textContent = "Event added successfully!";
+        msg.textContent = "Event submitted for review!";
         msg.style.color = "green";
         form.reset();
       } else {
-        msg.textContent = "Error adding event.";
+        msg.textContent = "Error submitting event.";
         msg.style.color = "red";
       }
     } catch (err) {
@@ -71,10 +71,10 @@ if (form) {
   });
 }
 
-// Display events on events.html
+// Display approved events on events.html
 const listContainer = document.getElementById("eventsList");
 if (listContainer) {
-  fetch(BASE_URL)
+  fetch(BASE_URL + "/approved")
     .then(res => res.json())
     .then(events => {
       listContainer.innerHTML = events.map(event => `
