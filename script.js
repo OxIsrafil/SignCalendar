@@ -20,7 +20,7 @@ function formatUTC(date, time) {
   return `${y}${m}${d}T${h}${min}00Z`;
 }
 
-// Toggle navbar on mobile
+// Mobile nav toggle
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 if (toggle) {
@@ -64,17 +64,17 @@ if (form) {
         msg.textContent = "Error submitting event.";
         msg.style.color = "red";
       }
-    } catch {
+    } catch (err) {
       msg.textContent = "Server error.";
       msg.style.color = "red";
     }
   });
 }
 
-// Load approved events on events.html
+// Display approved events on events.html
 const listContainer = document.getElementById("eventsList");
 if (listContainer) {
-  fetch(BASE_URL + "/approved")
+  fetch(BASE_URL)
     .then(res => res.json())
     .then(events => {
       listContainer.innerHTML = events.map(event => `
@@ -95,7 +95,7 @@ if (listContainer) {
     });
 }
 
-// Theme toggle
+// Theme switcher
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {
