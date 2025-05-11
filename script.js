@@ -1,3 +1,5 @@
+// last updated: 2025-05-12
+
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
 function generateGoogleCalendarLink(event) {
