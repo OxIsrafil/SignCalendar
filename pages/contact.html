@@ -6,6 +6,26 @@
   <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* Typing header */
+    .hero h1 {
+      width: fit-content;
+      margin: auto;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid white;
+      animation: typing 3s steps(30) 1s 1 normal both, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    /* Section fade-in */
     .info-section {
       animation: fadeIn 1s ease forwards;
       opacity: 0;
