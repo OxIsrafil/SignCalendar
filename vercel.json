@@ -1,13 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://signcalendarbackend.onrender.com/api/$1" }
-  ],
-  "routes": [
-    { "src": "/", "dest": "/pages/index.html" },
-    { "src": "/events", "dest": "/pages/events.html" },
-    { "src": "/contact", "dest": "/pages/contact.html" },
-    { "src": "/about", "dest": "/pages/about.html" },
-    { "src": "/admin", "dest": "/pages/admin.html" },
-    { "src": "/(.*)", "dest": "/pages/404.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": "https://signcalendarbackend.onrender.com/api/$1"
+    }
   ]
 }
