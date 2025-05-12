@@ -1,5 +1,3 @@
-// last updated: 2025-05-12
-
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
 function generateGoogleCalendarLink(event) {
@@ -40,7 +38,7 @@ window.addEventListener("load", () => {
   }
 });
 
-// Submit event form
+// Submit form
 const form = document.getElementById("eventForm");
 if (form) {
   form.addEventListener("submit", async (e) => {
@@ -73,31 +71,36 @@ if (form) {
   });
 }
 
-// Display approved events on events.html
+// Display events
 const listContainer = document.getElementById("eventsList");
 if (listContainer) {
   fetch(BASE_URL)
     .then(res => res.json())
     .then(events => {
-      listContainer.innerHTML = events.map(event => `
-        <div class="event-card">
-          <h3>${event.title}</h3>
-          <p>${event.description || "No description."}</p>
-          <p><strong>Date:</strong> ${event.date} <strong>Time:</strong> ${event.time}</p>
-          <p><strong>Location:</strong> 
-            ${event.location 
-              ? `<a href="${event.location}" target="_blank">${event.location}</a>` 
-              : "N/A"}
-          </p>
-          <a href="${generateGoogleCalendarLink(event)}" class="btn calendar-btn" target="_blank" title="Add reminder to your Google Calendar">
-            📅 Add reminder to your Google Calendar
-          </a>
-        </div>
-      `).join('');
+      listContainer.innerHTML = events.map(event => {
+        const eventTime = new Date(`${event.date}T${event.time}`);
+        const isPast = eventTime < new Date();
+
+        return `
+          <div class="event-card ${isPast ? 'past' : 'upcoming'}">
+            <h3>${event.title}</h3>
+            <p>${event.description || "No description."}</p>
+            <p><strong>Date:</strong> ${event.date} <strong>Time:</strong> ${event.time}</p>
+            <p><strong>Location:</strong> 
+              ${event.location ? `<a href="${event.location}" target="_blank">${event.location}</a>` : "N/A"}
+            </p>
+            ${event.hostName ? `<p><strong>Host:</strong> ${event.hostName}</p>` : ""}
+            ${isPast ? `<p class="event-finished">✅ Event Finished</p>` : ""}
+            <a href="${generateGoogleCalendarLink(event)}" class="btn calendar-btn" target="_blank">
+              📅 Add to Google Calendar
+            </a>
+          </div>
+        `;
+      }).join('');
     });
 }
 
-// Theme switcher
+// Theme toggle
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {
