@@ -7,15 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     .event-container-box {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-      max-width: 1200px;
-      margin: 30px auto;
+      background: linear-gradient(to right, #ff7700, #ff9222);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      max-width: 1280px;
+      margin: 60px auto;
       animation: slideFade 1s ease forwards;
       transform: translateY(30px);
       opacity: 0;
+    }
+
+    .event-container-box h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
     }
 
     @keyframes slideFade {
@@ -25,13 +33,15 @@
       }
     }
 
-    .event-container-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
+    .event-list-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
     }
   </style>
 </head>
-<body>
+<body class="home-bg">
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">SiGN Scheduler</div>
@@ -44,11 +54,9 @@
     </ul>
   </nav>
 
-  <header class="hero">
-    <h2>Upcoming Community Events</h2>
-  </header>
-
+  <!-- Events with Gradient Header Box -->
   <section class="event-container-box">
+    <h2>Upcoming Community Events</h2>
     <section id="eventsList" class="event-list-section">
       <p>Loading events...</p>
     </section>
