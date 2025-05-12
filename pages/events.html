@@ -5,6 +5,31 @@
   <title>Sign Scheduler - Events</title>
   <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .event-container-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      max-width: 1200px;
+      margin: 30px auto;
+      animation: slideFade 1s ease forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .event-container-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
@@ -23,8 +48,10 @@
     <h2>Upcoming Community Events</h2>
   </header>
 
-  <section id="eventsList" class="event-list-section">
-    <p>Loading events...</p>
+  <section class="event-container-box">
+    <section id="eventsList" class="event-list-section">
+      <p>Loading events...</p>
+    </section>
   </section>
 
   <!-- Footer -->

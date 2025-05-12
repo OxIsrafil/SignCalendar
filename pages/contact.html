@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Typing header */
     .hero h1 {
       width: fit-content;
       margin: auto;
@@ -25,42 +24,57 @@
       50% { border-color: transparent }
     }
 
-    /* Section fade-in */
-    .info-section {
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
-      transform: translateY(40px);
+    .text-boxed {
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 900px;
+      margin: 30px auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(3px);
+      animation: fadeInBox 1.2s ease both;
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .text-boxed p,
+    .text-boxed li {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #222;
     }
 
-    .info-section ul {
+    .text-boxed ul {
       margin-top: 20px;
       padding-left: 20px;
+      margin-bottom: 20px;
     }
 
-    .info-section li {
+    .text-boxed li {
       margin-bottom: 10px;
-      font-size: 1rem;
     }
 
-    .info-section a {
+    .text-boxed a {
       color: var(--accent);
       text-decoration: none;
       font-weight: 600;
     }
 
-    .info-section a:hover {
+    .text-boxed a:hover {
       text-decoration: underline;
+    }
+
+    @keyframes fadeInBox {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
-<body>
+<body class="home-bg">
   <nav class="navbar">
     <div class="logo">SiGN Scheduler</div>
     <div class="menu-toggle" id="menuToggle">&#9776;</div>
@@ -77,7 +91,7 @@
     <p>Let’s collaborate and build the future of Sign together.</p>
   </header>
 
-  <section class="info-section">
+  <section class="text-boxed">
     <p>We're always open to feedback, collaboration, or just hearing your thoughts.</p>
 
     <ul>
@@ -91,7 +105,7 @@
       </li>
     </ul>
 
-    <p style="margin-top: 20px;">
+    <p>
       Whether you found a bug, have a feature idea, or just want to say hi — we’d love to hear from you!
     </p>
   </section>

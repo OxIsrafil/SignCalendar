@@ -6,6 +6,33 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="https://i.imgur.com/tu258ed.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .form-section .text-boxed {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      backdrop-filter: blur(3px);
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeSlideIn 1.2s ease forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body class="home-bg">
 
@@ -36,16 +63,18 @@
 
   <!-- Event Form -->
   <section class="form-section">
-    <h2>Submit New Event</h2>
-    <form id="eventForm">
-      <input type="text" placeholder="Title" name="title" required>
-      <textarea placeholder="Description" name="description"></textarea>
-      <input type="text" placeholder="Location" name="location">
-      <input type="date" name="date" required>
-      <input type="time" name="time" required>
-      <button type="submit">Add Event</button>
-      <p id="formMsg"></p>
-    </form>
+    <div class="text-boxed">
+      <h2>Submit New Event</h2>
+      <form id="eventForm">
+        <input type="text" placeholder="Title" name="title" required>
+        <textarea placeholder="Description" name="description"></textarea>
+        <input type="text" placeholder="Location" name="location">
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <button type="submit">Add Event</button>
+        <p id="formMsg"></p>
+      </form>
+    </div>
   </section>
 
   <!-- Footer -->
