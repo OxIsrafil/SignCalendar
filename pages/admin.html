@@ -5,10 +5,37 @@
   <title>Admin Panel – Sign Scheduler</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+  <style>
+    .profile-info {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-info img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .logout-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">🔐 Admin Panel</div>
+    <div class="profile-info" id="profileInfo" style="display: none;"></div>
   </nav>
 
   <section class="info-section">
@@ -25,10 +52,10 @@
 
   <script>
     const allowedEmail = "israfil.m.pro@gmail.com";
-    const allowedXHandle = "OxIsrafil";
-    const nickname = (user.nickname || "").toLowerCase();
+    const allowedXHandle = "oxisrafil"; // lowercase
 
     let auth0;
+
     document.addEventListener("DOMContentLoaded", async () => {
       auth0 = await createAuth0Client({
         domain: "oxisrafil.jp.auth0.com",
@@ -45,14 +72,24 @@
       if (!isAuthenticated) return;
 
       const user = await auth0.getUser();
-      const email = user.email || "";
-      const nickname = user.nickname?.toLowerCase() || "";
+      const email = (user.email || "").toLowerCase();
+      const nickname = (user.nickname || "").toLowerCase();
 
       const allowed = email === allowedEmail || nickname === allowedXHandle;
+
       if (!allowed) {
         document.getElementById("login-area").innerHTML = `<p style="color:red;">⛔ Access denied. Only @oxisrafil can view this page.</p>`;
         return;
       }
+
+      // Show user profile info + logout
+      const profileDiv = document.getElementById("profileInfo");
+      profileDiv.innerHTML = `
+        <img src="${user.picture}" alt="Profile" />
+        <span>${user.nickname}</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      `;
+      profileDiv.style.display = "flex";
 
       document.getElementById("login-area").style.display = "none";
       document.getElementById("adminUI").style.display = "block";
@@ -62,6 +99,10 @@
     document.getElementById("loginBtn").addEventListener("click", () => {
       auth0.loginWithRedirect({ redirect_uri: window.location.href });
     });
+
+    async function logout() {
+      await auth0.logout({ returnTo: window.location.href });
+    }
 
     async function loadEvents() {
       const res = await fetch("https://signcalendarbackend.onrender.com/api/events/all");
