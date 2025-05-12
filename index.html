@@ -18,6 +18,16 @@
       max-width: 900px;
       margin: 60px auto 40px;
     }
+
+    .form-wrapper {
+      background: linear-gradient(to right, #fff8f0, #ffefd9);
+      padding: 40px 20px;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: 40px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
     @media (max-width: 600px) {
       .gradient-header-box {
         padding: 25px 15px;
@@ -26,33 +36,11 @@
       .gradient-header-box h2 {
         font-size: 1.3rem;
       }
-    }
-    .filter-tabs {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .filter-tabs button {
-      margin: 0 8px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      background: #ff7700;
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .filter-tabs button.active {
-      background: #ff5500;
-    }
-    .event-finished {
-      background: #f2f2f2;
-      color: #999;
-      padding: 4px 8px;
-      font-size: 0.85rem;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      display: inline-block;
+
+      .form-wrapper {
+        padding: 25px 15px;
+        margin: 30px 10px;
+      }
     }
   </style>
 </head>
@@ -79,27 +67,21 @@
     <div class="scroll-down">↓</div>
   </header>
 
-  <section class="form-section">
-    <h2>Submit New Event</h2>
-    <form id="eventForm">
-      <input type="text" placeholder="Title" name="title" required />
-      <textarea placeholder="Description" name="description"></textarea>
-      <input type="text" placeholder="Location" name="location" />
-      <input type="text" placeholder="Host Name" name="host" required />
-      <input type="date" name="date" required />
-      <input type="time" name="time" required />
-      <button type="submit">Add Event</button>
-      <p id="formMsg"></p>
-    </form>
-  </section>
-
-  <section class="filter-tabs">
-    <button class="active" onclick="filterEvents('upcoming')">Upcoming</button>
-    <button onclick="filterEvents('finished')">Finished</button>
-  </section>
-
-  <section id="eventsList" class="event-list-section">
-    <p>Loading events...</p>
+  <!-- ✅ Form with gradient background wrapper -->
+  <section class="form-wrapper">
+    <section class="form-section">
+      <h2>Submit New Event</h2>
+      <form id="eventForm">
+        <input type="text" placeholder="Title" name="title" required />
+        <textarea placeholder="Description" name="description"></textarea>
+        <input type="text" placeholder="Location" name="location" />
+        <input type="text" placeholder="Host Name" name="host" required />
+        <input type="date" name="date" required />
+        <input type="time" name="time" required />
+        <button type="submit">Add Event</button>
+        <p id="formMsg"></p>
+      </form>
+    </section>
   </section>
 
   <footer>
