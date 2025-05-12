@@ -14,7 +14,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: url('./assets/your-image.jpg') no-repeat center center fixed;
+  background: url('assets/bg1.png') no-repeat center center fixed;
   background-size: cover;
   color: var(--text);
   line-height: 1.6;
@@ -299,4 +299,45 @@ footer img {
   opacity: 0;
   transition: opacity 1s ease;
   pointer-events: none;
+}
+/* Full Page Background (home only) */
+body.home-bg {
+  background: url('assets/bg1.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Fix Hero Text Visibility */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  width: fit-content;
+  margin-inline: auto;
+  animation: typing 3s steps(35, end) 1s 1 normal both, blink 0.7s step-end 3;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+  100% { border-color: transparent; } /* hide cursor after 3 blinks */
+}
+
+.hero p {
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+  animation-delay: 3.3s;
+  font-size: 1rem;
+  color: white;
+}
+
+/* Remove grey bg */
+.hero::before {
+  background: rgba(0, 0, 0, 0.4);
 }
