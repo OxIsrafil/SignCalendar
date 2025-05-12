@@ -14,7 +14,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: var(--bg);
+  background: url('./assets/your-image.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--text);
   line-height: 1.6;
 }
@@ -30,11 +31,9 @@ a {
   color: var(--accent);
   text-decoration: none;
 }
-
 a:hover {
   color: #ff5500;
 }
-
 button {
   background-color: var(--accent);
   color: white;
@@ -46,7 +45,6 @@ button {
   font-weight: bold;
   transition: background 0.2s ease;
 }
-
 button:hover {
   background-color: #ff8c1a;
 }
@@ -64,12 +62,10 @@ button:hover {
   top: 0;
   z-index: 1000;
 }
-
 .navbar .logo {
   font-size: 1.4rem;
   font-weight: bold;
 }
-
 .nav-links {
   list-style: none;
   display: none;
@@ -79,26 +75,21 @@ button:hover {
   padding: 10px 0;
   z-index: 999;
 }
-
 .nav-links.active {
   display: flex;
 }
-
 .nav-links li {
   padding: 10px 20px;
 }
-
 .nav-links a {
   color: white;
   font-weight: bold;
 }
-
 .menu-toggle {
   display: block;
   font-size: 1.8rem;
   cursor: pointer;
 }
-
 @media (min-width: 768px) {
   .nav-links {
     display: flex !important;
@@ -109,61 +100,47 @@ button:hover {
     padding: 0;
     opacity: 1;
   }
-
   .nav-links li {
     padding: 0;
   }
-
   .nav-links a {
     color: white;
   }
-
   .menu-toggle {
     display: none;
   }
 }
 
-/* Parallax Hero */
+/* Hero (Default BG removed for global BG, orange text theme restored) */
 .hero {
-  background: url('./assets/your-image.jpg') no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed;
   padding: 100px 20px;
   color: white;
   text-align: center;
   position: relative;
 }
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 0;
-}
-
-.hero h2, .hero p, .scroll-down {
-  position: relative;
-  z-index: 1;
-}
-
 .hero h2 {
-  width: fit-content;
-  margin: auto;
+  font-size: 2rem;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 3px solid white;
-  animation: typing 3s steps(35) 1s 1 normal both, blink 0.7s step-end infinite;
+  margin: auto;
+  width: fit-content;
+  animation: typing 3s steps(35) 1s 1 normal both;
 }
-
+.hero h2::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background-color: white;
+  margin-left: 2px;
+  animation: blink 0.7s steps(1) infinite;
+}
 .hero p {
-  animation: fadeIn 1.2s ease forwards;
+  margin-top: 10px;
+  animation: fadeIn 1s ease 3.5s forwards;
   opacity: 0;
   transform: translateY(15px);
-  animation-delay: 3.2s;
 }
-
 .scroll-down {
   text-align: center;
   margin-top: 20px;
@@ -175,20 +152,17 @@ button:hover {
   animation-fill-mode: forwards;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
 @keyframes typing {
   from { width: 0 }
   to { width: 100% }
 }
-
 @keyframes blink {
-  50% { border-color: transparent }
+  50% { background-color: transparent; }
 }
-
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 @keyframes fadeIn {
   to {
     opacity: 1;
@@ -196,35 +170,22 @@ button:hover {
   }
 }
 
-/* Section */
+/* Form & Section */
 section {
   padding: 30px 20px;
   max-width: 900px;
   margin: auto;
 }
-
 .form-section form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .form-section h2 {
-  width: fit-content;
-  margin: auto;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid var(--accent);
-  animation: typing2 2.5s steps(30) 0.5s 1 normal both, blink2 0.7s step-end infinite;
-}
-
-@keyframes typing2 {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink2 {
-  50% { border-color: transparent }
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-bottom: 20px;
 }
 
 form input,
@@ -237,13 +198,12 @@ form textarea {
   border-radius: 6px;
   font-size: 1rem;
 }
-
 form textarea {
   resize: vertical;
   min-height: 80px;
 }
 
-/* Events Grid */
+/* Event Grid */
 .event-list-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -252,56 +212,40 @@ form textarea {
   max-width: 1300px;
   margin: 0 auto;
 }
-
 .event-card {
   background: var(--card);
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #eee;
   box-shadow: 0 5px 10px rgba(255, 119, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeInUp 0.6s ease both;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 280px;
 }
-
 .event-card h3 {
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
-
 .event-card .btn {
   background: var(--accent);
   color: white;
   padding: 6px 14px;
   margin-top: 10px;
-  display: inline-block;
   border-radius: 5px;
 }
-
 .event-card p {
   font-size: 0.95rem;
   margin-bottom: 6px;
   word-break: break-word;
 }
-
 .event-card a {
   word-break: break-word;
 }
-
 .event-card .calendar-btn {
   margin-top: auto;
   align-self: flex-start;
 }
-
-/* Animation */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .calendar-btn {
   display: inline-flex;
   align-items: center;
@@ -314,19 +258,8 @@ form textarea {
   color: white;
   transition: background 0.2s ease;
 }
-
 .calendar-btn:hover {
   background-color: #ff9222;
-}
-
-/* Info Page */
-.info-section {
-  padding: 20px;
-  background: var(--card);
-  border-radius: 8px;
-  margin: 20px auto;
-  max-width: 800px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Footer */
@@ -337,18 +270,15 @@ footer {
   background: transparent;
   color: var(--text);
 }
-
 footer a {
   color: var(--accent);
   font-weight: bold;
   transition: color 0.3s ease;
 }
-
 footer a:hover {
   color: #ff5500;
   text-decoration: underline;
 }
-
 footer img {
   display: block;
   margin: 0 auto 10px;
@@ -365,84 +295,8 @@ footer img {
   top: 0;
   left: 0;
 }
-
 .loader.fade-out {
   opacity: 0;
   transition: opacity 1s ease;
   pointer-events: none;
-}
-
-/* Profile Cards */
-.profile-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  justify-items: center;
-  margin: 40px auto;
-}
-
-.profile-card {
-  background: var(--card);
-  border-radius: 12px;
-  text-align: center;
-  padding: 20px;
-  max-width: 260px;
-  min-height: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(255, 119, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeUp 0.8s ease forwards;
-  opacity: 0;
-}
-
-.profile-cards + p,
-.profile-cards + .about-text {
-  margin-top: 50px !important;
-}
-
-.profile-card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 10px 20px rgba(255, 119, 0, 0.25);
-}
-
-.profile-card img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 12px;
-  border: 3px solid var(--accent);
-}
-
-.profile-card h3 {
-  margin-bottom: 6px;
-  font-size: 1.1rem;
-}
-
-.profile-card p {
-  font-size: 0.88rem;
-  color: #777;
-  margin-bottom: 6px;
-  min-height: 36px;
-}
-
-.profile-card a {
-  color: var(--accent);
-  font-weight: bold;
-  font-size: 0.9rem;
-  text-decoration: none;
-}
-
-.profile-card a:hover {
-  text-decoration: underline;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
