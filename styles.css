@@ -264,25 +264,53 @@ form textarea {
 
 /* Footer */
 footer {
+  position: relative;
+  margin-top: 60px;
+  color: white;
+  padding: 40px 20px;
   text-align: center;
-  padding: 30px 10px;
-  margin-top: 30px;
-  background: transparent;
-  color: var(--text);
+  background: linear-gradient(to right, #ff7700, #ff9222);
+  clip-path: polygon(0 10%, 100% 0%, 100% 100%, 0% 100%);
+  animation: fadeInFooter 1.2s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
 }
+
+@keyframes fadeInFooter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 footer a {
-  color: var(--accent);
+  color: white;
   font-weight: bold;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 footer a:hover {
-  color: #ff5500;
+  color: #ffe4c0;
   text-decoration: underline;
 }
+
 footer img {
   display: block;
   margin: 0 auto 10px;
   height: 40px;
+}
+
+footer p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  footer {
+    font-size: 0.85rem;
+    padding: 30px 15px;
+    clip-path: polygon(0 5%, 100% 0%, 100% 100%, 0% 100%);
+  }
 }
 
 /* Loader */
