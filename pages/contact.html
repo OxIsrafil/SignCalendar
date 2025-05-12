@@ -5,6 +5,7 @@
   <title>Contact - SiGN Scheduler</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="https://i.imgur.com/tu258ed.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     .gradient-header-box {
@@ -18,17 +19,13 @@
       margin: 60px auto 40px;
     }
 
-    @media (max-width: 600px) {
-      .gradient-header-box {
-        padding: 25px 15px;
-        font-size: 0.95rem;
-      }
-      .gradient-header-box h1 {
-        font-size: 1.4rem;
-      }
-    }
-
     .info-section {
+      background-color: rgba(255, 255, 255, 0.92); /* 👈 Semi-transparent white bg */
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 850px;
+      margin: auto;
       animation: fadeIn 1s ease forwards;
       opacity: 0;
       transform: translateY(40px);
@@ -59,6 +56,20 @@
 
     .info-section a:hover {
       text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .gradient-header-box {
+        padding: 25px 15px;
+        font-size: 0.95rem;
+      }
+      .gradient-header-box h1 {
+        font-size: 1.4rem;
+      }
+
+      .info-section {
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -101,14 +112,13 @@
   </section>
 
   <footer>
-  <p>
-    Built with ❤️ by 
-    <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> & 
-    <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
-  </p>
-  <p>A product of <strong>Sign Lab</strong> 🧪</p>
-  <p style="font-size: 0.8rem;">&copy; 2025 Sign Scheduler. All rights reserved.</p>
-</footer>
-
+    <p>
+      Built with ❤️ by 
+      <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> & 
+      <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
+    </p>
+    <p>A product of <strong>Sign Lab</strong> 🧪</p>
+    <p style="font-size: 0.8rem;">&copy; 2025 Sign Scheduler. All rights reserved.</p>
+  </footer>
 </body>
 </html>
