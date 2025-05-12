@@ -313,3 +313,67 @@ footer img {
   transition: opacity 1s ease;
   pointer-events: none;
 }
+
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  justify-items: center;
+}
+
+.profile-card {
+  background: var(--card);
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  max-width: 280px;
+  box-shadow: 0 4px 10px rgba(255, 119, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(255, 119, 0, 0.3);
+}
+
+.profile-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid var(--accent);
+}
+
+.profile-card h3 {
+  margin: 10px 0 6px;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.profile-card p {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.profile-card a {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.profile-card a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
