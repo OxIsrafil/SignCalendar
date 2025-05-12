@@ -5,7 +5,26 @@
   <title>About - SiGN Scheduler</title>
   <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .info-section p {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideIn 0.8s ease forwards;
+    }
 
+    .info-section p:nth-child(1) { animation-delay: 0.2s; }
+    .info-section p:nth-child(2) { animation-delay: 0.4s; }
+    .info-section p:nth-child(3) { animation-delay: 0.6s; }
+    .info-section p:nth-child(4) { animation-delay: 0.8s; }
+    .info-section p:nth-child(5) { animation-delay: 1s; }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -21,37 +40,24 @@
 
   <header class="hero">
     <h1>About This Platform</h1>
-    <p>SiGN Scheduler is a community-built tool to help the Sign Protocol ecosystem organize and track public events.</p>
+    <p>Organize, connect, and grow — built for the Sign community by the Sign community.</p>
   </header>
 
   <section class="info-section">
-    <p><strong>SiGN Scheduler</strong> is a free, community-built tool designed to make public event planning easy, transparent, and fun within the <strong>Sign Protocol ecosystem</strong>.</p>
-
-    <p>Whether it's Twitter Spaces, workshops, team calls, or collaborative moments — anyone in the Sign fam can schedule, browse, and add events to their calendar with one click.</p>
-
-    <p>This project was built by community contributors <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> &amp; <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a> — and is proudly a product of <strong>Sign Lab</strong>.</p>
-
-    <p>We believe in the power of decentralized organization, and this tool is a small step toward making community coordination smoother and stronger.</p>
-
-    <p>Have feedback, ideas, or want to contribute? Feel free to reach out. This is built by the community, for the community.</p>
+    <p><strong>SiGN Scheduler</strong> is a free, community-driven platform to easily plan and follow public events within the <strong>Sign Protocol ecosystem</strong>.</p>
+    <p>Twitter Spaces, team syncs, collabs — anyone from the Sign fam can schedule, view, and save events instantly to their calendar.</p>
+    <p>This tool was crafted by contributors <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> & <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>, proudly under <strong>Sign Lab</strong>.</p>
+    <p>We believe in decentralized coordination. This is a step toward smoother, open, and fun community collaboration.</p>
+    <p>Want to contribute or have feedback? Let us know. This is yours as much as it is ours.</p>
   </section>
 
-  <!-- Footer -->
   <footer>
-  
-  <p>
-    Built with ❤️ by 
-    <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> &amp; 
-    <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
-  </p>
-  
-  <p style="margin-top: 6px; font-size: 0.9rem;">
-    A product of <strong>Sign Lab</strong> 🧪
-  </p>
-  
-  <p style="margin-top: 10px; font-size: 0.8rem; color: #999;">
-    &copy; 2025 Sign Scheduler. All rights reserved.
-  </p>
-</footer>
+    <p>Built with ❤️ by 
+      <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> &amp; 
+      <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
+    </p>
+    <p style="margin-top: 6px;">A product of <strong>Sign Lab</strong> 🧪</p>
+    <p style="margin-top: 10px; font-size: 0.8rem; color: #999;">&copy; 2025 Sign Scheduler. All rights reserved.</p>
+  </footer>
 </body>
 </html>
