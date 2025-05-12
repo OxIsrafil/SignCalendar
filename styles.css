@@ -174,9 +174,11 @@ form textarea {
 /* Events List */
 .event-list-section {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  padding: 20px;
+  padding: 30px 20px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -187,14 +189,21 @@ form textarea {
 
 .event-card {
   background: var(--card);
-  padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 20px;
   border: 1px solid #eee;
-  box-shadow: 0 3px 8px rgba(255, 119, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(255, 119, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.6s ease both;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
 }
 
 .event-card h3 {
-  color: var(--text);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 
 .event-card .btn {
@@ -206,6 +215,34 @@ form textarea {
   border-radius: 5px;
 }
 
+.event-card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+.event-card a {
+  word-break: break-word;
+}
+
+/* Equal Height & Flex */
+.event-card .calendar-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Google Calendar Button */
 .calendar-btn {
   display: inline-flex;
@@ -213,9 +250,10 @@ form textarea {
   gap: 6px;
   font-weight: 500;
   background-color: var(--accent);
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  color: white;
   transition: background 0.2s ease;
 }
 

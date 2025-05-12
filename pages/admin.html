@@ -4,30 +4,136 @@
   <meta charset="UTF-8" />
   <title>Admin Panel – Sign Scheduler</title>
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .admin-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    #login-area {
+      text-align: center;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 60px auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    #login-area h2 {
+      margin-bottom: 20px;
+    }
+
+    #adminPassword {
+      padding: 10px 14px;
+      width: 80%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    #adminUI h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-buttons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-buttons button {
+      margin: 0 8px;
+      padding: 8px 16px;
+      border-radius: 5px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .filter-buttons button.active {
+      background-color: #ff5500;
+    }
+
+    #eventsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .event-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      border-left: 6px solid var(--accent);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(255, 119, 0, 0.15);
+    }
+
+    .event-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .event-card p {
+      margin: 6px 0;
+      font-size: 0.95rem;
+    }
+
+    .event-card .btn {
+      margin-top: 12px;
+      margin-right: 8px;
+    }
+
+    @media (max-width: 480px) {
+      #adminPassword {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">🔐 Admin Panel</div>
   </nav>
 
-  <section class="info-section">
-    <div id="login-area">
-      <h2>Admin Access</h2>
-      <input type="password" id="adminPassword" placeholder="Enter admin password" class="input" />
-      <button id="loginBtn" class="btn">Unlock Panel</button>
-      <p id="loginMsg" style="color:red;"></p>
-    </div>
+  <div class="admin-container">
+    <section class="info-section">
+      <div id="login-area">
+        <h2>Admin Access</h2>
+        <input type="password" id="adminPassword" placeholder="Enter admin password" />
+        <button id="loginBtn" class="btn">Unlock Panel</button>
+        <p id="loginMsg" style="color:red;"></p>
+      </div>
 
-    <div id="adminUI" style="display: none;">
-      <h2>All Events (Moderation)</h2>
-      <div id="eventsContainer"></div>
-    </div>
-  </section>
+      <div id="adminUI" style="display: none;">
+        <h2>All Events (Moderation)</h2>
+
+        <div class="filter-buttons">
+          <button onclick="filterEvents('all')" class="active">All</button>
+          <button onclick="filterEvents('approved')">Approved ✅</button>
+          <button onclick="filterEvents('pending')">Pending ⏳</button>
+        </div>
+
+        <div id="eventsContainer"></div>
+      </div>
+    </section>
+  </div>
 
   <script>
-    const ADMIN_PASSWORD = "signsuperadmin"; // you can change this
+    const ADMIN_PASSWORD = "signsuperadmin";
     const loginBtn = document.getElementById("loginBtn");
     const loginMsg = document.getElementById("loginMsg");
+
+    let allEvents = [];
 
     loginBtn.addEventListener("click", () => {
       const entered = document.getElementById("adminPassword").value;
@@ -36,30 +142,54 @@
         document.getElementById("adminUI").style.display = "block";
         loadEvents();
       } else {
-        loginMsg.textContent = "Incorrect password!";
+        loginMsg.textContent = "❌ Incorrect password!";
       }
     });
 
     async function loadEvents() {
       const res = await fetch("https://signcalendarbackend.onrender.com/api/events/all");
-      const events = await res.json();
+      allEvents = await res.json();
+      renderEvents(allEvents);
+    }
 
+    function renderEvents(events) {
       const container = document.getElementById("eventsContainer");
-      container.innerHTML = events.length
-        ? events.map(ev => `
-          <div class="event-card">
-            <h3>${ev.title}</h3>
-            <p>${ev.description}</p>
-            <p><strong>Date:</strong> ${ev.date} | <strong>Time:</strong> ${ev.time}</p>
-            <p><strong>Location:</strong> ${ev.location || "N/A"}</p>
-            <p>Status: ${ev.approved ? "✅ Approved" : "⏳ Pending"}</p>
-            ${!ev.approved ? `
-              <button onclick="approveEvent('${ev._id}')" class="btn">✅ Approve</button>
-              <button onclick="deleteEvent('${ev._id}')" class="btn" style="background:red;">❌ Reject</button>
-            ` : ""}
-          </div>
-        `).join('')
-        : "<p>No events yet.</p>";
+      if (!events.length) {
+        container.innerHTML = "<p>No events found.</p>";
+        return;
+      }
+
+      container.innerHTML = events.map(ev => `
+        <div class="event-card">
+          <h3>${ev.title}</h3>
+          <p>${ev.description}</p>
+          <p><strong>Date:</strong> ${ev.date} | <strong>Time:</strong> ${ev.time}</p>
+          <p><strong>Location:</strong> ${ev.location || "N/A"}</p>
+          <p>Status: ${ev.approved ? "✅ Approved" : "⏳ Pending"}</p>
+          ${!ev.approved ? `
+            <button onclick="approveEvent('${ev._id}')" class="btn">✅ Approve</button>
+            <button onclick="deleteEvent('${ev._id}')" class="btn" style="background:red;">❌ Reject</button>
+          ` : ""}
+        </div>
+      `).join("");
+    }
+
+    function filterEvents(type) {
+      document.querySelectorAll(".filter-buttons button").forEach(btn => btn.classList.remove("active"));
+      const activeBtn = {
+        all: 0,
+        approved: 1,
+        pending: 2
+      }[type];
+      document.querySelectorAll(".filter-buttons button")[activeBtn].classList.add("active");
+
+      if (type === "all") {
+        renderEvents(allEvents);
+      } else if (type === "approved") {
+        renderEvents(allEvents.filter(ev => ev.approved));
+      } else if (type === "pending") {
+        renderEvents(allEvents.filter(ev => !ev.approved));
+      }
     }
 
     async function approveEvent(id) {
