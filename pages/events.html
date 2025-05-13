@@ -7,6 +7,52 @@
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" type="image/png" href="https://i.imgur.com/tu258ed.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    .event-container-box {
+      background: linear-gradient(to right, #ff7700, #ff9222);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      max-width: 1280px;
+      margin: 60px auto;
+      animation: slideFade 1s ease forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    .event-container-box h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .event-list-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    @media (min-width: 1300px) {
+      .event-list-section {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .event-container-box h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body class="home-bg">
   <!-- Navbar -->
