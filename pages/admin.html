@@ -164,7 +164,7 @@
         <div class="event-card">
           <h3>${ev.title}</h3>
           <p>${ev.description || "No description provided."}</p>
-          <p><strong>Date:</strong> ${ev.date} | <strong>Time:</strong> ${ev.time}</p>
+          <p><strong>Date:</strong> ${ev.date} | <strong>Time:</strong> ${ev.time} UTC</p>
           ${ev.location ? `<p><strong>Location:</strong> <a href="${ev.location}" target="_blank">${ev.location}</a></p>` : ""}
           ${ev.hostName ? `<p><strong>Host:</strong> ${ev.hostName}</p>` : ""}
           <p>Status: ${ev.approved ? "✅ Approved" : "⏳ Pending"}</p>

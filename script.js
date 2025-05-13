@@ -10,7 +10,7 @@ function generateGoogleCalendarLink(event) {
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${desc}&location=${location}&sf=true&output=xml`;
 }
 
-// Google Calendar Format UTC
+// Format UTC for Google Calendar
 function formatUTC(date, time) {
   const dt = new Date(`${date}T${time}:00Z`);
   const y = dt.getUTCFullYear();
@@ -21,21 +21,20 @@ function formatUTC(date, time) {
   return `${y}${m}${d}T${h}${min}00Z`;
 }
 
-// Human-readable time (UTC or Local)
-function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
+// Human-readable UTC date
+function formatDisplayDate(dateStr, timeStr) {
   const dt = new Date(`${dateStr}T${timeStr}Z`);
-  let date = dt.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
-  let time = dt.toLocaleTimeString(undefined, {
+  const date = dt.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  const time = dt.toLocaleTimeString(undefined, {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
-    timeZone: mode === "UTC" ? "UTC" : undefined
+    timeZone: "UTC"
   });
-  let label = mode === "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return `Date: ${date} – Time: ${time} ${label}`;
+  return `Date: ${date} – Time: ${time} UTC`;
 }
 
-// Countdown display
+// Countdown
 function getCountdown(dateStr, timeStr) {
   const eventTime = new Date(`${dateStr}T${timeStr}Z`);
   const now = new Date();
@@ -46,7 +45,7 @@ function getCountdown(dateStr, timeStr) {
   return `⏳ ${hours}h ${mins}m left`;
 }
 
-// Mobile nav
+// Nav toggle
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 if (toggle) {
@@ -64,7 +63,7 @@ window.addEventListener("load", () => {
   }
 });
 
-// Pre-correct Time to UTC before sending to backend
+// Convert time to UTC before submitting
 function convertTimeToUTC(date, time) {
   const localDate = new Date(`${date}T${time}`);
   const utcHours = String(localDate.getUTCHours()).padStart(2, '0');
@@ -72,7 +71,7 @@ function convertTimeToUTC(date, time) {
   return `${utcHours}:${utcMinutes}`;
 }
 
-// Submit form (convert local time to UTC string)
+// Form submit (convert to UTC)
 const form = document.getElementById("eventForm");
 if (form) {
   form.addEventListener("submit", async (e) => {
@@ -85,7 +84,6 @@ if (form) {
       delete data.host;
     }
 
-    // ✅ Convert local time to UTC string before sending
     if (data.date && data.time) {
       data.time = convertTimeToUTC(data.date, data.time);
     }
@@ -117,10 +115,9 @@ if (form) {
   });
 }
 
-// Event Renderer
+// Render events
 const listContainer = document.getElementById("eventsList");
 const filterTabs = document.getElementById("eventFilterTabs");
-let displayMode = "UTC";
 let currentTab = "all";
 
 function renderEvents(events) {
@@ -133,7 +130,7 @@ function renderEvents(events) {
     .map(event => {
       const eventTime = new Date(`${event.date}T${event.time}Z`);
       const isPast = eventTime < now;
-      const formatted = formatDisplayDate(event.date, event.time, displayMode);
+      const formatted = formatDisplayDate(event.date, event.time);
       const countdown = !isPast ? getCountdown(event.date, event.time) : "";
 
       return `
@@ -155,7 +152,7 @@ function renderEvents(events) {
   listContainer.innerHTML = filtered || `<p>No events found for this tab.</p>`;
 }
 
-// Event Fetcher + Filter
+// Load + filter
 if (listContainer) {
   let cachedEvents = [];
   fetch(BASE_URL)
@@ -175,17 +172,9 @@ if (listContainer) {
       }
     });
   }
-
-  const tzToggle = document.getElementById("timezoneToggle");
-  if (tzToggle) {
-    tzToggle.addEventListener("change", () => {
-      displayMode = tzToggle.value;
-      renderEvents(cachedEvents);
-    });
-  }
 }
 
-// Theme Switch
+// Theme toggle
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {
