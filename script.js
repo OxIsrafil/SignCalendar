@@ -1,6 +1,6 @@
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
-// Generate Google Calendar URL
+// Google Calendar URL
 function generateGoogleCalendarLink(event) {
   const title = encodeURIComponent(event.title);
   const desc = encodeURIComponent(event.description || '');
@@ -10,7 +10,7 @@ function generateGoogleCalendarLink(event) {
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${desc}&location=${location}&sf=true&output=xml`;
 }
 
-// Format time for Google Calendar
+// Google Calendar Format UTC
 function formatUTC(date, time) {
   const dt = new Date(`${date}T${time}:00Z`);
   const y = dt.getUTCFullYear();
@@ -21,7 +21,7 @@ function formatUTC(date, time) {
   return `${y}${m}${d}T${h}${min}00Z`;
 }
 
-// Format readable date + time
+// Human-readable time (UTC or Local)
 function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
   const dt = new Date(`${dateStr}T${timeStr}Z`);
   let date = dt.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
@@ -35,19 +35,18 @@ function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
   return `Date: ${date} – Time: ${time} ${label}`;
 }
 
-// Countdown text
+// Countdown display
 function getCountdown(dateStr, timeStr) {
   const eventTime = new Date(`${dateStr}T${timeStr}Z`);
   const now = new Date();
   const diff = eventTime - now;
   if (diff <= 0) return "";
-
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   return `⏳ ${hours}h ${mins}m left`;
 }
 
-// Mobile nav toggle
+// Mobile nav
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 if (toggle) {
@@ -56,7 +55,7 @@ if (toggle) {
   });
 }
 
-// Loader animation
+// Loader
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (loader) {
@@ -65,17 +64,30 @@ window.addEventListener("load", () => {
   }
 });
 
-// Event form submission
+// Pre-correct Time to UTC before sending to backend
+function convertTimeToUTC(date, time) {
+  const localDate = new Date(`${date}T${time}`);
+  const utcHours = String(localDate.getUTCHours()).padStart(2, '0');
+  const utcMinutes = String(localDate.getUTCMinutes()).padStart(2, '0');
+  return `${utcHours}:${utcMinutes}`;
+}
+
+// Submit form (convert local time to UTC string)
 const form = document.getElementById("eventForm");
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(form));
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
 
-    // Rename "host" to "hostName" so backend saves it correctly
     if (data.host) {
       data.hostName = data.host;
       delete data.host;
+    }
+
+    // ✅ Convert local time to UTC string before sending
+    if (data.date && data.time) {
+      data.time = convertTimeToUTC(data.date, data.time);
     }
 
     const msg = document.getElementById("formMsg");
@@ -105,7 +117,7 @@ if (form) {
   });
 }
 
-// Events rendering (with tab filter, timezone, countdown)
+// Event Renderer
 const listContainer = document.getElementById("eventsList");
 const filterTabs = document.getElementById("eventFilterTabs");
 let displayMode = "UTC";
@@ -143,7 +155,7 @@ function renderEvents(events) {
   listContainer.innerHTML = filtered || `<p>No events found for this tab.</p>`;
 }
 
-// Load and filter events
+// Event Fetcher + Filter
 if (listContainer) {
   let cachedEvents = [];
   fetch(BASE_URL)
@@ -173,7 +185,7 @@ if (listContainer) {
   }
 }
 
-// Theme toggle (dark/light)
+// Theme Switch
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {

@@ -28,6 +28,14 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
+    .time-utc-note {
+      font-size: 0.85rem;
+      color: #ff7700;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
     @media (max-width: 600px) {
       .gradient-header-box {
         padding: 25px 15px;
@@ -77,7 +85,8 @@
         <input type="text" placeholder="X Space Link" name="location" />
         <input type="text" placeholder="Host Name" name="hostName" required />
         <input type="date" name="date" required />
-        <input type="time" name="time" required />
+        <input type="time" name="time" required placeholder="Time (in UTC)" />
+        <div class="time-utc-note">* Please enter time in <strong>UTC</strong></div>
         <button type="submit">Add Event</button>
         <p id="formMsg"></p>
       </form>
