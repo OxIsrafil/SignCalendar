@@ -1,48 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Sign Scheduler - Events</title>
-  <link rel="stylesheet" href="../styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" type="image/png" href="https://i.imgur.com/tu258ed.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    .event-container-box {
-      background: linear-gradient(to right, #ff7700, #ff9222);
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      max-width: 1280px;
-      margin: 60px auto;
-      animation: slideFade 1s ease forwards;
-      transform: translateY(30px);
-      opacity: 0;
-    }
-
-    .event-container-box h2 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 40px;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
-    }
-
-    @keyframes slideFade {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .event-list-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body class="home-bg">
-
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">SiGN Scheduler</div>
@@ -55,9 +21,26 @@
     </ul>
   </nav>
 
-  <!-- Events with Gradient Header Box -->
+  <!-- Gradient Header Box -->
   <section class="event-container-box">
     <h2>Upcoming Community Events</h2>
+
+    <div class="event-controls">
+      <div id="eventFilterTabs">
+        <button data-tab="all" class="active">All</button>
+        <button data-tab="upcoming">Upcoming</button>
+        <button data-tab="finished">Finished</button>
+      </div>
+      <div>
+        <label for="timezoneToggle" style="font-weight:bold; margin-right: 8px;">Timezone:</label>
+        <select id="timezoneToggle">
+          <option value="UTC" selected>UTC</option>
+          <option value="local">Your Local Time</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Events List -->
     <section id="eventsList" class="event-list-section">
       <p>Loading events...</p>
     </section>
@@ -65,15 +48,14 @@
 
   <!-- Footer -->
   <footer>
-  <p>
-    Built with ❤️ by 
-    <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> & 
-    <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
-  </p>
-  <p>A product of <strong>Sign Lab</strong> 🧪</p>
-  <p style="font-size: 0.8rem;">&copy; 2025 Sign Scheduler. All rights reserved.</p>
-</footer>
-
+    <p>
+      Built with ❤️ by 
+      <a href="https://x.com/OxIsrafil" target="_blank">@OxIsrafil</a> & 
+      <a href="https://x.com/Hikaru___san" target="_blank">@Hikaru___san</a>
+    </p>
+    <p>A product of <strong>Sign Lab</strong> 🧪</p>
+    <p style="font-size: 0.8rem;">&copy; 2025 Sign Scheduler. All rights reserved.</p>
+  </footer>
 
   <script src="../script.js"></script>
 </body>

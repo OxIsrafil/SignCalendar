@@ -111,35 +111,47 @@ button:hover {
   }
 }
 
-/* Hero (Default BG removed for global BG, orange text theme restored) */
+/* Hero */
 .hero {
   padding: 30px 20px;
   color: white;
   text-align: center;
   position: relative;
 }
+.hero-content {
+  z-index: 2;
+  position: relative;
+}
 .hero h2 {
   font-size: 2rem;
+  margin-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
-  margin: auto;
+  border-right: 3px solid white;
   width: fit-content;
-  animation: typing 3s steps(35) 1s 1 normal both;
-}
-.hero h2::after {
-  content: '';
-  display: inline-block;
-  width: 2px;
-  height: 1.2em;
-  background-color: white;
-  margin-left: 2px;
-  animation: blink 0.7s steps(1) infinite;
+  margin-inline: auto;
+  animation: typing 3s steps(35, end) 1s 1 normal both, blink 0.7s step-end 3;
 }
 .hero p {
-  margin-top: 10px;
-  animation: fadeIn 1s ease 3.5s forwards;
   opacity: 0;
-  transform: translateY(15px);
+  animation: fadeIn 1.2s ease forwards;
+  animation-delay: 3.3s;
+  font-size: 1rem;
+  color: white;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink {
+  50% { border-color: transparent; }
+  100% { border-color: transparent; }
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .scroll-down {
   text-align: center;
@@ -151,23 +163,9 @@ button:hover {
   animation-delay: 4s;
   animation-fill-mode: forwards;
 }
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-@keyframes blink {
-  50% { background-color: transparent; }
-}
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-}
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Form & Section */
@@ -176,18 +174,25 @@ section {
   max-width: 900px;
   margin: auto;
 }
+.form-section {
+  background: rgba(255,255,255,0.9);
+  padding: 30px;
+  border-radius: 14px;
+  backdrop-filter: blur(3px);
+  margin: 50px auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.form-section h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 20px;
+}
 .form-section form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.form-section h2 {
-  text-align: center;
-  font-size: 1.4rem;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
 form input,
 form textarea {
   width: 90%;
@@ -203,198 +208,121 @@ form textarea {
   min-height: 80px;
 }
 
-/* Event Grid */
+/* Events */
 .event-list-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  padding: 30px 20px;
   max-width: 1300px;
   margin: 0 auto;
+  padding: 20px;
 }
 .event-card {
   background: var(--card);
   border-radius: 10px;
   padding: 20px;
-  border: 1px solid #eee;
-  box-shadow: 0 5px 10px rgba(255, 119, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(255, 119, 0, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 280px;
 }
 .event-card h3 {
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
-.event-card .btn {
-  background: var(--accent);
-  color: white;
-  padding: 6px 14px;
-  margin-top: 10px;
-  border-radius: 5px;
-}
 .event-card p {
   font-size: 0.95rem;
   margin-bottom: 6px;
-  word-break: break-word;
 }
 .event-card a {
   word-break: break-word;
 }
 .event-card .calendar-btn {
   margin-top: auto;
-  align-self: flex-start;
+}
+.event-finished {
+  color: red;
+  font-weight: bold;
+}
+.countdown {
+  font-weight: bold;
+  color: green;
 }
 .calendar-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
   background-color: var(--accent);
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-size: 0.92rem;
   color: white;
-  transition: background 0.2s ease;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 10px;
 }
 .calendar-btn:hover {
   background-color: #ff9222;
 }
 
+/* Event Controls */
+.event-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+#eventFilterTabs button {
+  padding: 8px 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  background: #eee;
+  cursor: pointer;
+}
+#eventFilterTabs button.active {
+  background: var(--accent);
+  color: white;
+}
+#timezoneToggle {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+}
+
 /* Footer */
 footer {
-  position: relative;
-  margin-top: 60px;
+  background: linear-gradient(to right, #ff7700, #ff9222);
   color: white;
   padding: 40px 20px;
   text-align: center;
-  background: linear-gradient(to right, #ff7700, #ff9222);
   clip-path: polygon(0 10%, 100% 0%, 100% 100%, 0% 100%);
   animation: fadeInFooter 1.2s ease forwards;
   opacity: 0;
   transform: translateY(30px);
 }
-
 @keyframes fadeInFooter {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-footer a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-footer a:hover {
-  color: #ffe4c0;
-  text-decoration: underline;
-}
-
-footer img {
-  display: block;
-  margin: 0 auto 10px;
-  height: 40px;
-}
-
 footer p {
   margin: 6px 0;
   font-size: 0.95rem;
 }
-
+footer a {
+  color: white;
+  font-weight: bold;
+}
+footer a:hover {
+  color: #ffe4c0;
+}
 @media (max-width: 600px) {
   footer {
     font-size: 0.85rem;
     padding: 30px 15px;
     clip-path: polygon(0 5%, 100% 0%, 100% 100%, 0% 100%);
   }
-}
-
-/* Loader */
-.loader {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background: var(--accent);
-  z-index: 9999;
-  top: 0;
-  left: 0;
-}
-.loader.fade-out {
-  opacity: 0;
-  transition: opacity 1s ease;
-  pointer-events: none;
-}
-/* Full Page Background (home only) */
-body.home-bg {
-  background: url('assets/bg1.png') no-repeat center center fixed;
-  background-size: cover;
-}
-
-/* Fix Hero Text Visibility */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-.hero h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid white;
-  width: fit-content;
-  margin-inline: auto;
-  animation: typing 3s steps(35, end) 1s 1 normal both, blink 0.7s step-end 3;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-  100% { border-color: transparent; } /* hide cursor after 3 blinks */
-}
-
-.hero p {
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
-  animation-delay: 3.3s;
-  font-size: 1rem;
-  color: white;
-}
-
-/* Remove grey bg */
-.hero::before {
-  background: rgba(0, 0, 0, 0.4);
-}
-/* Styled background shapes behind text for readability */
-.text-boxed {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 900px;
-  margin: 40px auto 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(3px);
-  animation: fadeInBox 1.2s ease both;
-}
-
-@keyframes fadeInBox {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.text-boxed p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #222;
-  margin-bottom: 12px;
 }

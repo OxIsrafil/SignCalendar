@@ -24,9 +24,8 @@
       padding: 40px 20px;
       border-radius: 16px;
       max-width: 700px;
-      margin: 40px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-top: 10px;
+      margin: 40px auto 60px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     @media (max-width: 600px) {
@@ -40,8 +39,7 @@
 
       .form-wrapper {
         padding: 25px 15px;
-        margin: 30px 10px;
-      
+        margin: 30px 15px 50px;
       }
     }
   </style>
@@ -69,7 +67,7 @@
     <div class="scroll-down">↓</div>
   </header>
 
-  <!-- ✅ Form with gradient background wrapper -->
+  <!-- ✅ Form with background shape for readability -->
   <section class="form-wrapper">
     <section class="form-section">
       <h2>Submit New Event</h2>
@@ -77,7 +75,7 @@
         <input type="text" placeholder="Title" name="title" required />
         <textarea placeholder="Description" name="description"></textarea>
         <input type="text" placeholder="X Space Link" name="location" />
-        <input type="text" placeholder="Host Name" name="host" required />
+        <input type="text" placeholder="Host Name" name="hostName" required />
         <input type="date" name="date" required />
         <input type="time" name="time" required />
         <button type="submit">Add Event</button>

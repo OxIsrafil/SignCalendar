@@ -1,15 +1,16 @@
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
+// Helper: Google Calendar URL
 function generateGoogleCalendarLink(event) {
   const title = encodeURIComponent(event.title);
   const desc = encodeURIComponent(event.description || '');
   const location = encodeURIComponent(event.location || '');
   const start = formatUTC(event.date, event.time);
   const end = start;
-
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${desc}&location=${location}&sf=true&output=xml`;
 }
 
+// Format UTC for Google Calendar
 function formatUTC(date, time) {
   const dt = new Date(`${date}T${time}:00Z`);
   const y = dt.getUTCFullYear();
@@ -18,6 +19,32 @@ function formatUTC(date, time) {
   const h = String(dt.getUTCHours()).padStart(2, '0');
   const min = String(dt.getUTCMinutes()).padStart(2, '0');
   return `${y}${m}${d}T${h}${min}00Z`;
+}
+
+// Format readable date
+function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
+  const dt = new Date(`${dateStr}T${timeStr}Z`);
+  let date = dt.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  let time = dt.toLocaleTimeString(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: mode === "UTC" ? "UTC" : undefined
+  });
+  let label = mode === "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return `Date: ${date} – Time: ${time} ${label}`;
+}
+
+// Countdown string
+function getCountdown(dateStr, timeStr) {
+  const eventTime = new Date(`${dateStr}T${timeStr}Z`);
+  const now = new Date();
+  const diff = eventTime - now;
+  if (diff <= 0) return "";
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  return `⏳ ${hours}h ${mins}m left`;
 }
 
 // Mobile nav toggle
@@ -38,7 +65,7 @@ window.addEventListener("load", () => {
   }
 });
 
-// Submit form
+// Submit event form
 const form = document.getElementById("eventForm");
 if (form) {
   form.addEventListener("submit", async (e) => {
@@ -71,43 +98,80 @@ if (form) {
   });
 }
 
-// Display events
+// Display Events with filter, countdown & timezone toggle
 const listContainer = document.getElementById("eventsList");
+const filterTabs = document.getElementById("eventFilterTabs");
+let displayMode = "UTC";
+let currentTab = "all";
+
+function renderEvents(events) {
+  const now = new Date();
+  const filtered = events
+    .filter(e => {
+      const time = new Date(`${e.date}T${e.time}Z`);
+      return currentTab === "all" || (currentTab === "upcoming" && time > now) || (currentTab === "finished" && time <= now);
+    })
+    .map(event => {
+      const eventTime = new Date(`${event.date}T${event.time}Z`);
+      const isPast = eventTime < now;
+      const formatted = formatDisplayDate(event.date, event.time, displayMode);
+      const countdown = !isPast ? getCountdown(event.date, event.time) : "";
+
+      return `
+        <div class="event-card ${isPast ? 'past' : 'upcoming'}">
+          <h3>${event.title}</h3>
+          <p>${event.description || "No description."}</p>
+          <p>${formatted}</p>
+          ${event.location ? `<p><strong>Location:</strong> <a href="${event.location}" target="_blank">${event.location}</a></p>` : ""}
+          ${event.hostName ? `<p><strong>Host:</strong> ${event.hostName}</p>` : ""}
+          ${countdown ? `<p class="countdown">${countdown}</p>` : ""}
+          ${isPast ? `<p class="event-finished">✅ Event Finished</p>` : ""}
+          <a href="${generateGoogleCalendarLink(event)}" class="btn calendar-btn" target="_blank">
+            📅 Add to Google Calendar
+          </a>
+        </div>
+      `;
+    }).join('');
+
+  listContainer.innerHTML = filtered || `<p>No events found for this tab.</p>`;
+}
+
 if (listContainer) {
+  let cachedEvents = [];
   fetch(BASE_URL)
     .then(res => res.json())
     .then(events => {
-      listContainer.innerHTML = events.map(event => {
-        const eventTime = new Date(`${event.date}T${event.time}`);
-        const isPast = eventTime < new Date();
-
-        return `
-          <div class="event-card ${isPast ? 'past' : 'upcoming'}">
-            <h3>${event.title}</h3>
-            <p>${event.description || "No description."}</p>
-            <p><strong>Date:</strong> ${event.date} <strong>Time:</strong> ${event.time}</p>
-            <p><strong>Location:</strong> 
-              ${event.location ? `<a href="${event.location}" target="_blank">${event.location}</a>` : "N/A"}
-            </p>
-            ${event.hostName ? `<p><strong>Host:</strong> ${event.hostName}</p>` : ""}
-            ${isPast ? `<p class="event-finished">✅ Event Finished</p>` : ""}
-            <a href="${generateGoogleCalendarLink(event)}" class="btn calendar-btn" target="_blank">
-              📅 Add to Google Calendar
-            </a>
-          </div>
-        `;
-      }).join('');
+      cachedEvents = events;
+      renderEvents(events);
     });
+
+  if (filterTabs) {
+    filterTabs.addEventListener("click", (e) => {
+      if (e.target.dataset.tab) {
+        currentTab = e.target.dataset.tab;
+        document.querySelectorAll("#eventFilterTabs button").forEach(btn => btn.classList.remove("active"));
+        e.target.classList.add("active");
+        renderEvents(cachedEvents);
+      }
+    });
+  }
+
+  const tzToggle = document.getElementById("timezoneToggle");
+  if (tzToggle) {
+    tzToggle.addEventListener("change", () => {
+      displayMode = tzToggle.value;
+      renderEvents(cachedEvents);
+    });
+  }
 }
 
-// Theme toggle
+// Theme switcher
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
   });
-
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
   }
