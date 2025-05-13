@@ -1,6 +1,6 @@
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
-// Helper: Google Calendar URL
+// Generate Google Calendar URL
 function generateGoogleCalendarLink(event) {
   const title = encodeURIComponent(event.title);
   const desc = encodeURIComponent(event.description || '');
@@ -10,7 +10,7 @@ function generateGoogleCalendarLink(event) {
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${desc}&location=${location}&sf=true&output=xml`;
 }
 
-// Format UTC for Google Calendar
+// Format time for Google Calendar
 function formatUTC(date, time) {
   const dt = new Date(`${date}T${time}:00Z`);
   const y = dt.getUTCFullYear();
@@ -21,7 +21,7 @@ function formatUTC(date, time) {
   return `${y}${m}${d}T${h}${min}00Z`;
 }
 
-// Format readable date
+// Format readable date + time
 function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
   const dt = new Date(`${dateStr}T${timeStr}Z`);
   let date = dt.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
@@ -35,7 +35,7 @@ function formatDisplayDate(dateStr, timeStr, mode = "UTC") {
   return `Date: ${date} – Time: ${time} ${label}`;
 }
 
-// Countdown string
+// Countdown text
 function getCountdown(dateStr, timeStr) {
   const eventTime = new Date(`${dateStr}T${timeStr}Z`);
   const now = new Date();
@@ -56,7 +56,7 @@ if (toggle) {
   });
 }
 
-// Loader
+// Loader animation
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (loader) {
@@ -65,12 +65,19 @@ window.addEventListener("load", () => {
   }
 });
 
-// Submit event form
+// Event form submission
 const form = document.getElementById("eventForm");
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
+
+    // Rename "host" to "hostName" so backend saves it correctly
+    if (data.host) {
+      data.hostName = data.host;
+      delete data.host;
+    }
+
     const msg = document.getElementById("formMsg");
 
     try {
@@ -98,7 +105,7 @@ if (form) {
   });
 }
 
-// Display Events with filter, countdown & timezone toggle
+// Events rendering (with tab filter, timezone, countdown)
 const listContainer = document.getElementById("eventsList");
 const filterTabs = document.getElementById("eventFilterTabs");
 let displayMode = "UTC";
@@ -136,6 +143,7 @@ function renderEvents(events) {
   listContainer.innerHTML = filtered || `<p>No events found for this tab.</p>`;
 }
 
+// Load and filter events
 if (listContainer) {
   let cachedEvents = [];
   fetch(BASE_URL)
@@ -165,7 +173,7 @@ if (listContainer) {
   }
 }
 
-// Theme switcher
+// Theme toggle (dark/light)
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {

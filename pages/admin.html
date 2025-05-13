@@ -163,9 +163,10 @@
       container.innerHTML = events.map(ev => `
         <div class="event-card">
           <h3>${ev.title}</h3>
-          <p>${ev.description}</p>
+          <p>${ev.description || "No description provided."}</p>
           <p><strong>Date:</strong> ${ev.date} | <strong>Time:</strong> ${ev.time}</p>
-          <p><strong>Location:</strong> ${ev.location || "N/A"}</p>
+          ${ev.location ? `<p><strong>Location:</strong> <a href="${ev.location}" target="_blank">${ev.location}</a></p>` : ""}
+          ${ev.hostName ? `<p><strong>Host:</strong> ${ev.hostName}</p>` : ""}
           <p>Status: ${ev.approved ? "✅ Approved" : "⏳ Pending"}</p>
           ${!ev.approved ? `
             <button onclick="approveEvent('${ev._id}')" class="btn">✅ Approve</button>
