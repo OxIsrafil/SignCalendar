@@ -177,7 +177,6 @@ button:hover {
   margin: 50px auto;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-
 .form-section {
   padding: 0;
   background: transparent;
@@ -226,7 +225,8 @@ form textarea {
   box-shadow: 0 5px 10px rgba(255, 119, 0, 0.08);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  height: 100%;
 }
 .event-card h3 {
   font-size: 1.1rem;
@@ -235,6 +235,7 @@ form textarea {
 .event-card p {
   font-size: 0.95rem;
   margin-bottom: 6px;
+  word-wrap: break-word;
 }
 .event-card a {
   word-break: break-word;
@@ -291,6 +292,73 @@ form textarea {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-weight: bold;
+}
+
+/* Profile Cards (About Page) */
+.profile-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px auto 60px;
+  max-width: 1200px;
+}
+
+.profile-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(255, 119, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 280px;
+  flex: 1;
+  animation: fadeUp 1s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 119, 0, 0.2);
+}
+
+.profile-card:nth-child(1) { animation-delay: 0.2s; }
+.profile-card:nth-child(2) { animation-delay: 0.4s; }
+.profile-card:nth-child(3) { animation-delay: 0.6s; }
+
+.profile-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid var(--accent);
+}
+
+.profile-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.profile-card p {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.profile-card a {
+  margin-top: 10px;
+  display: inline-block;
+  color: var(--accent);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Footer */
