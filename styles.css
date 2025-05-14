@@ -296,14 +296,14 @@ form textarea {
 
 /* Profile Cards (About Page) */
 .profile-cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   justify-content: center;
   gap: 30px;
   margin: 40px auto 60px;
-  max-width: 1200px;
+  max-width: 1000px;
+  place-items: center;
 }
-
 .profile-card {
   background: var(--card);
   border-radius: 16px;
