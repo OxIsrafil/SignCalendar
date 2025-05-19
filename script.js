@@ -1,5 +1,52 @@
 const BASE_URL = "https://signcalendarbackend.onrender.com/api/events";
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  const privyAppId = "cmavcn54h00aila0n6fwls8do"; //  App ID here
+
+  window.privy = new Privy({
+    appId: privyAppId,
+    onSuccess: (user) => {
+      console.log("✅ Logged in:", user);
+      localStorage.setItem("privyUser", JSON.stringify(user));
+      showWelcome(user);
+    },
+    onLogout: () => {
+      console.log("👋 Logged out");
+      localStorage.removeItem("privyUser");
+      hideWelcome();
+    },
+  });
+
+  document.getElementById("loginBtn")?.addEventListener("click", () => {
+    window.privy.login();
+  });
+
+  document.getElementById("logoutBtn")?.addEventListener("click", () => {
+    window.privy.logout();
+  });
+
+  // Auto-show user if already logged in
+  const savedUser = localStorage.getItem("privyUser");
+  if (savedUser) {
+    showWelcome(JSON.parse(savedUser));
+  }
+});
+
+function showWelcome(user) {
+  const name = user.twitter?.username || user.email?.address || user.wallet?.address;
+  document.getElementById("welcomeText").textContent = `Welcome, ${name}`;
+  document.getElementById("loginBtn").style.display = "none";
+  document.getElementById("logoutBtn").style.display = "inline-block";
+}
+
+function hideWelcome() {
+  document.getElementById("welcomeText").textContent = "";
+  document.getElementById("loginBtn").style.display = "inline-block";
+  document.getElementById("logoutBtn").style.display = "none";
+}
+
+
 // Google Calendar URL
 function generateGoogleCalendarLink(event) {
   const title = encodeURIComponent(event.title);
